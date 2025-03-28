@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <center>
+    <h1>POST</h1>
+    <form>
+       
+        <label>CPF:</label>
+        <input type="text" id="cpfCadastro">
+        <br><br>
+        <label>Nome:</label>
+        <input type="text" id="nome">
+        <br><br>
+        <label>Idade:</label>
+        <input type="text" id="idade">
+        <input type="button" onclick="enviarDados()" value="Enviar">
+        <br><br>
+    
+    </form> 
+
+    <script>
+        //POST
+        function enviarDados(){
+            const nome = document.getElementById('nome').value;
+            const idade = document.getElementById('idade').value;
+            const cpf = document.getElementById('cpfCadastro').value;
+
+            fetch('pessoas',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nome: nome, idade: idade, cpf: cpf})
+            })
+            .then(response => response.json())
+            .then(data => {
+                 //atualiza os valores na tela
+                document.getElementById('mostrarNome').textContent = data.nome;
+                document.getElementById('mostrarIdade').textContent = data.idade;
+                document.getElementById('mostrarCpf').textContent = data.cpf;
+            
+                // limpa os inputs do formulário
+                document.getElementById('nome').value = '';
+                document.getElementById('idade').value = '';
+                document.getElementById('cpfCadastro').value = '';
+            });
+            
+        }
+          
+    </script>
+    <button> <a class="link" href="index.html">Voltar</a></button>
+</center>
+</body>
+</html>
